@@ -2,7 +2,7 @@ import { useState } from "react"
 
 
 type InfoBarProps = {
-    slide?: {id: number, text: string, image: string, story: string}
+    slide?: {id: number, text: string, image: string, story: string, fontColor: string}
 }
 
 
@@ -21,7 +21,7 @@ export default function Rightinfobar({slide} : InfoBarProps) {
                     
                     <h1>Please excuse our dust</h1>
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <h2>{slide?.story} </h2>                    
+                            <h2 style={{color: slide?.fontColor}}>{slide?.story} </h2>                    
                         </div>
                     
                     </div>

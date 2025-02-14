@@ -105,9 +105,18 @@ export default function App() {
     setSlides( slides.filter(s => s.id !==idToDelete) )
   }
 
+  const updateslideFontColor = ( newColor: string, idToUpdate?: number) => {
+    setSlides(slides.map(slide => (
+      slide.id !== idToUpdate ? slide : {
+        ...slide,
+        fontColor: newColor
+      }
+    )))
+  }
+
   return (
     <div className="d-flex flex-column vh-100">
-      <Navbar changeBackgroundImage={handleImageCycle} />
+      <Navbar selectedSlide={selectedSlide}changeBackgroundImage={handleImageCycle} updateslideFontColor={updateslideFontColor}/>
       <ListField />
       <div className="d-flex flex-grow-1">
         <Sidebar addBlankSlide={addBlankSlide} />

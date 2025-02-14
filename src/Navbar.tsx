@@ -8,16 +8,18 @@ import { Button, Modal } from "react-bootstrap";
 import { useState } from "react";
 
 type NavbarProps = {
-  changeBackgroundImage: () => void; 
+  changeBackgroundImage: () => void
+  updateslideFontColor: ( color: string, id?: number,) =>  void
+  selectedSlide?: {id: number, text: string, image: string, fontColor: string}
 }
 
-export default function Navbar({ changeBackgroundImage }: NavbarProps) {
+export default function Navbar({ changeBackgroundImage, updateslideFontColor, selectedSlide }: NavbarProps) {
   const [isBackgroundModalOpen, setIsBackgroundModalOpen] = useState(false);
   const [isTextColorModalOpen, setTextColorModalOpen] = useState(false);
 
   const handleCloseBackgroundModal = () => setIsBackgroundModalOpen(false);
   const handleCloseTextColorModal = () => setTextColorModalOpen(false);
-  const [, setFontColor] = useState("black")
+  
 
   return (
     <div className="bg-transparent p-3 border border-black border-5 d-flex justify-content-center w-100">
@@ -59,9 +61,9 @@ export default function Navbar({ changeBackgroundImage }: NavbarProps) {
           </Modal.Header>
           <Modal.Body>
             Choose a new text color: <br />
-            <Button variant="danger" onClick={() => setFontColor("red")}>Red</Button>
-            <Button variant="primary" onClick={() => setFontColor("blue")} >Blue</Button>
-            <Button variant="warning" onClick={() => setFontColor("orange")}>Orange</Button>
+            <Button variant={selectedSlide?.fontColor === "red" ? "danger" : "outline-danger"} onClick={() => updateslideFontColor("red", selectedSlide?.id)}>Red</Button>
+            <Button variant={selectedSlide?.fontColor === "blue" ? "primary" : "outline-primary"} onClick={() => updateslideFontColor("blue",selectedSlide?.id)} >Blue</Button>
+            <Button variant={selectedSlide?.fontColor === "orange" ? "warning" : "outline-warning"} onClick={() => updateslideFontColor( "orange", selectedSlide?.id)}>Orange</Button>
           </Modal.Body>
           <Modal.Footer>
             

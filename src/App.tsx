@@ -64,6 +64,7 @@ export default function App() {
   const [slides, setSlides] = useState(testSlides);
   const [selectedSlideId, setSelectedSlideId] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
 
   const changeBackgroundImage = (url: string) => {
     document.body.style.backgroundImage = `url(${url})`;
@@ -89,16 +90,18 @@ export default function App() {
 
   const selectedSlide = slides.find((s) => s.id === selectedSlideId);
 
-  const addBlankSlide = () => {
+  const addBlankSlide = (text: string, story: string, image: string, resetInputs: () => void) => {
     const blankSlide = {
       id: slides.length > 0 ? slides[slides.length - 1].id + 1 : 0, // Use slides.length here
-      text: "Coming Soon",
-      image: thumbnailImage4,
-      story: "pqr",
+      text: text,
+      image: image || thumbnailImage4, // Set default image if no URL is entered
+      story: story,
       fontColor: "Black"
     };
 
     setSlides([...slides, blankSlide]);
+    resetInputs();
+    setIsSidebarExpanded(false); // Close the sidebar
   }
 
   const deleteSlide = (idToDelete: number) => {
@@ -116,11 +119,11 @@ export default function App() {
 
   return (
     <div className="d-flex flex-column vh-100">
-      <Navbar selectedSlide={selectedSlide}changeBackgroundImage={handleImageCycle} updateslideFontColor={updateslideFontColor}/>
+      <Navbar selectedSlide={selectedSlide} changeBackgroundImage={handleImageCycle} updateslideFontColor={updateslideFontColor}/>
       <ListField />
       <div className="d-flex flex-grow-1">
-        <Sidebar addBlankSlide={addBlankSlide} />
-        <SlideView slides={slides} deleteSlide={deleteSlide}selectedSlideId={selectedSlideId} setSelectedSlideId={setSelectedSlideId} /> {/* Use slides here */}
+        <Sidebar addBlankSlide={addBlankSlide} isExpanded={isSidebarExpanded} setIsExpanded={setIsSidebarExpanded} />
+        <SlideView slides={slides} deleteSlide={deleteSlide} selectedSlideId={selectedSlideId} setSelectedSlideId={setSelectedSlideId} /> {/* Use slides here */}
         <Rightinfobar slide={selectedSlide} />
       </div>
     </div>

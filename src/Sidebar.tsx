@@ -1,14 +1,24 @@
 import { useState } from "react";
 
 type SidebarProps = {
-  addBlankSlide: () => void;
+  addBlankSlide: (text: string, story: string, image: string, resetInputs: () => void) => void;
+  isExpanded: boolean;
+  setIsExpanded: (isExpanded: boolean) => void;
 };
 
-export default function Sidebar({ addBlankSlide }: SidebarProps) {
-  const [isExpanded, setIsExpanded] = useState(true);
+export default function Sidebar({ addBlankSlide, isExpanded, setIsExpanded }: SidebarProps) {
+  const [newSlideText, setNewSlideText] = useState("");
+  const [newSlideStory, setNewSlideStory] = useState("");
+  const [newSlideImage, setNewSlideImage] = useState("");
 
   const handleButtonClick = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const resetInputs = () => {
+    setNewSlideText("");
+    setNewSlideStory("");
+    setNewSlideImage("");
   };
 
   return (
@@ -22,25 +32,30 @@ export default function Sidebar({ addBlankSlide }: SidebarProps) {
             <input
               className="w-75 m-2 border border-black border-5 p-2 bg-light bg-opacity-25 font-weight-bold"
               type="text"
-              id="inputID"
-              placeholder="Coming Soon"
+              placeholder="Slide Text"
+              value={newSlideText}
+              onChange={(e) => setNewSlideText(e.target.value)}
             />
             <input
               className="w-75 m-2 border border-black border-5 p-2 bg-light bg-opacity-25 font-weight-bold"
               type="text"
-              id="inputID"
-              placeholder="Coming Soon"
+              placeholder="Slide Story"
+              value={newSlideStory}
+              onChange={(e) => setNewSlideStory(e.target.value)}
             />
             <input
               className="w-75 m-2 border border-black border-5 p-2 bg-light bg-opacity-25 font-weight-bold"
               type="text"
-              id="inputID"
-              placeholder="Coming Soon"
+              placeholder="Image URL"
+              value={newSlideImage}
+              onChange={(e) => setNewSlideImage(e.target.value)}
             />
-
             <button
               className="btn btn-primary mt-2 border border-black border-5 w-75"
-              onClick={addBlankSlide}
+              onClick={(e) => {
+                e.preventDefault();
+                addBlankSlide(newSlideText, newSlideStory, newSlideImage, resetInputs);
+              }}
             >
               Enter
             </button>

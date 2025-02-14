@@ -17,7 +17,7 @@ export default function Sidebar({addBlankSlide} : SidebarProps) {
     return (
         <>
             {isExpanded ? (
-                <div className="border-black border-end border-5 bg-transparent p-5 d-flex flex-column vh-100 vw-75">
+                <div className="border-black border-end border-5 bg-transparent p-5 d-flex flex-column vh-100 vw-10">
                 <div>
                     <form>
                         <input
